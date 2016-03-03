@@ -294,7 +294,7 @@ class RbRelease < ActiveRecord::Base
         when 'system'
           # Only admin users can set a systemwide sharing
           user.admin?
-        when 'hierarchy', 'tree'
+        when 'tree'
           # Only users allowed to manage versions of the root project can
           # set sharing to hierarchy or tree
           project.nil? || user.allowed_to?(:manage_versions, project.root)
