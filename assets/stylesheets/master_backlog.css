@@ -47,18 +47,18 @@
   width: 100%;
 }
 .fff-middle{
-  margin-right:112px;
-  margin-left:110px;
+  margin-right:150px;
+  margin-left:112px;
 }
 .fff-left{
   float: left;
-  width: 110px;
+  width: 130px;
   margin-left: -100%;
 }
 .fff-right{
   float: left;
-  width: 112px;
-  margin-left: -112px;
+  width: 150px;
+  margin-left: -150px;
 }
 
 .header .fff-middle{
@@ -354,7 +354,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 #backlogs_container .stories .story .id{
   position:relative;
-  width:55px;
+/*  width:55px;*/
   float: left;
 }
 #backlogs_container .stories .story .id .t * {
@@ -418,9 +418,9 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
   text-decoration:line-through;
 }
 #backlogs_container .stories .story .status_id {
-  width:68px;
+  width:90px;
   float: left;
-  padding-left:8px;
+/*  padding-left:8px; */
   white-space: nowrap;
 }
 
@@ -534,11 +534,12 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 #backlogs_container .stories .story.editing .editor{
   display: block;
   font-family:Verdana, Arial, sans-serif;
+  font-size: 10px;
 }
 #backlogs_container .stories .story.editing .tracker_id.editor{
   display:block;
   margin:0;
-  max-width:80px;
+  max-width:120px;
   float: left;
 }
 #backlogs_container .stories .story.editing .subject.editor{
@@ -548,7 +549,7 @@ ul li { vertical-align: bottom; } /* close IE7 gap between list items */
 }
 #backlogs_container .stories .story.editing .status_id{
   margin:0;
-  width:76px;
+  width:90px;
 }
 #backlogs_container .stories .story.editing select.story_points.editor {
   margin:0;

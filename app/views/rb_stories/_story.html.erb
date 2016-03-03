@@ -1,8 +1,8 @@
 <li class="model story fff-wrapper <%= mark_if_closed(story) %> tracker<%= story ? story.tracker_id : '' %>" id="<%= story_html_id_or_empty(story) %>">
  <div class="fff-wrapmiddle">
-   <div class="story_field fff-middle">
+   <div class="story_field fff-middle" style="white-space: nowrap; margin-right: 156px;">
      <span class="editable subject" fieldname="subject" fieldlabel="<%=l(:field_subject)%>" fieldtype="textarea"><%=h story.subject %></span>
-     <span class="story_field">(<%= story.estimated_hours.to_f %> est h, <%= story.priority.name %> )</span>
+     <span class="story_field">(<%= story.estimated_hours.to_f %> est h)</span>
   </div>
  </div>
  <div class="fff-left">
@@ -22,6 +22,13 @@
   <div class="tracker_id editable story_field" fieldtype="select" fieldname="tracker_id" fieldlabel="<%=l(:field_tracker_id)%>">
     <div class="t"><%= h tracker_name_or_empty(story) %></div>
     <div class="v"><%= tracker_id_or_empty(story) %></div>
+  </div>
+  <div class="id" style="padding-top: 4px">
+    <div class="t story_field" style="padding-top: 0px; padding-bottom: 2px;">
+      <span class="prevent_edit" style="width: 53px; text-align: center; color: #1145F8; background: initial">
+        <%=h story.priority %>
+      </span>
+    </div>
   </div>
  </div>
  <div class="fff-right">

@@ -44,7 +44,7 @@ RB.Story = RB.Object.create(RB.Issue, RB.EditableInplace, {
     tracker.change(function() { self.setAllowedStatuses(tracker, status); });
     var l = editor.children(':first').insertAfter(editor.find('.tracker_id.editor'));
     editor.children(':first').insertAfter(l);
-    editor.find('.subject.editor').width(this.$.find('.fff-wrapmiddle').width()-200);
+    editor.find('.subject.editor').width(this.$.find('.fff-wrapmiddle').width()-220);
     var name = editor.find('.name.editor');
     name.width(parseInt(name.attr('_rb_width'),10) - 10);
   },
