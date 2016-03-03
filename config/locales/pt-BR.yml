@@ -108,7 +108,7 @@ pt-BR:
   field_time_entry_hours: "Horas do Tempo de entrada"
   field_time_entry_spend_on: "Tempo de entrada gasto em"
   field_time_entry_user_id: "Tempo de Entrada do Usuário Id"
-  field_tracker_id: "[[Tracker ID]]"
+  field_tracker_id: "Tipo de Tarefa"
   field_velocity_based_estimate: "Velocidade estimada"
   label_all_tasks: "Todas Tarefas"
   label_back_to_project: "Voltar à página do projeto"

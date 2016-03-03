@@ -59,11 +59,7 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
   end
 
   def release_display_name(release)
-    if @project == release.project
-      release.name
-    else
-      "#{release.project.try(:identifier)}-#{release.name}"
-    end
+    "#{release.project.try(:name)} - #{release.name}"
   end
 
   def release_link_or_empty(release)
@@ -148,7 +144,7 @@ filter:progid:DXImageTransform.Microsoft.Gradient(Enabled=1,GradientType=0,Start
     return '' if story.new_record?
     res = ''
     story.custom_field_values.each{|value|
-      res += "<p><b>#{h(value.custom_field.name)}</b>: #{simple_format_without_paragraph(h(show_value(value)))}</p>"
+      res += "<b>#{h(value.custom_field.name)}</b>: #{simple_format_without_paragraph(h(show_value(value)))}<br>"
     }
     res.html_safe
   end
