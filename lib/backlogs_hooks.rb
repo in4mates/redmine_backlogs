@@ -86,30 +86,37 @@ module BacklogsPlugin
 
           return '' unless Backlogs.configured?(issue.project)
 
-          snippet = ''
+          snippet = '<div class="splitcontent"><div class="splitcontentleft">'
 
           project = context[:project]
 
           if issue.is_story?
-            snippet += "<tr><th>#{l(:field_story_points)}</th><td>#{RbStory.find(issue.id).points_display}</td>"
+            snippet += "<div class='story-points attribute'><div class='label'><span>#{l(:field_story_points)}</span>:</div>"
+            snippet += "<div class='value'>#{RbStory.find(issue.id).points_display}</div></div>"
             unless issue.remaining_hours.nil?
-              snippet += "<th>#{l(:field_remaining_hours)}</th><td>#{l_hours(issue.remaining_hours)}</td>"
+              snippet += "<div class='remaining-hours attribute'><div class='label'><span>#{l(:field_remaining_hours)}</span>:</div>"
+              snippet += "<div class='value'>#{l_hours(issue.remaining_hours)}</div></div>"
             end
-            snippet += "</tr>"
             vbe = issue.velocity_based_estimate
-            snippet += "<tr><th>#{l(:field_velocity_based_estimate)}</th><td>#{vbe ? vbe.to_s + ' days' : '-'}</td></tr>"
+            snippet += "<div class='velocity attribute'><div class='label'><span>#{l(:field_velocity_based_estimate)}</span>:</div>"
+            snippet += "<div class='value'>#{vbe ? vbe.to_s + ' days' : '-'}</div></div></div><div class='splitcontentleft'>"
 
             unless issue.release_id.nil?
               release = RbRelease.find(issue.release_id)
-              snippet += "<tr><th>#{l(:field_release)}</th><td>#{link_to(release.name, url_for_prefix_in_hooks + url_for({:controller => 'rb_releases', :action => 'show', :release_id => release}))}</td>"
+              snippet += "<div class='release attribute'><div class='label'><span>#{l(:field_release)}</span>:</div>"
+              snippet += "<div class='value'>#{link_to(release.name, url_for_prefix_in_hooks + url_for({:controller => 'rb_releases', :action => 'show', :release_id => release}))}</div></div>"
+
               relation_translate = l("label_release_relationship_#{RbStory.find(issue.id).release_relationship}")
-              snippet += "<th>#{l(:field_release_relationship)}</th><td>#{relation_translate}</td></tr>"
+              snippet += "<div class='release-relationship attribute'><div class='label'><span>#{l(:field_release_relationship)}</span>:</div>"
+              snippet += "<div class='value'>#{relation_translate}</div></div>"
             end
           end
 
           if issue.is_task? && User.current.allowed_to?(:update_remaining_hours, project) != nil
-            snippet += "<tr><th>#{l(:field_remaining_hours)}</th><td>#{issue.remaining_hours}</td></tr>"
+            snippet += "<div class='remaining-hours attribute'><div class='label'><span>#{l(:field_remaining_hours)}</span>:</div>"
+            snippet += "<div class='value'>#{issue.remaining_hours}</div></div>"
           end
+          snippet += "</div></div>"
 
           return snippet
         rescue => e
