@@ -4,6 +4,8 @@ include ContextMenusHelper
 module BacklogsPlugin
   module Hooks
     class LayoutHook < Redmine::Hook::ViewListener
+
+      include IssuesHelper
       # this ought to be view_issues_sidebar_queries_bottom, but
       # the entire queries toolbar is disabled if you don't have
       # custom queries
@@ -16,10 +18,10 @@ module BacklogsPlugin
       def helper_issues_show_detail_after_setting(context={ })
       	begin
           if context[:detail].prop_key == 'release_id'
-            r = RbRelease.find_by_id(context[:detail].value)
+            r = RbRelease.where(id: context[:detail].value).first
             context[:detail].value = r.name unless r.nil? || r.name.nil?
 
-            r = RbRelease.find_by_id(context[:detail].old_value)
+            r = RbRelease.where(id: context[:detail].old_value).first
             context[:detail].old_value = r.name unless r.nil? || r.name.nil?
           end
         rescue => e

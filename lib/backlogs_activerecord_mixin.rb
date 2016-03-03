@@ -91,11 +91,11 @@ module Backlogs
         end
 
         def first()
-          return self.class.find_by_position(self.class.minimum(:position))
+          return self.class.where(position: self.class.minimum(:position)).first
         end
 
         def last()
-          return self.class.find_by_position(self.class.maximum(:position))
+          return self.class.where(position: self.class.maximum(:position)).first
         end
 
         def higher_item()

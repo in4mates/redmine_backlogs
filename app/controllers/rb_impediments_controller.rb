@@ -22,7 +22,7 @@ class RbImpedimentsController < RbApplicationController
   end
 
   def update
-    @impediment = RbTask.find_by_id(params[:id])
+    @impediment = RbTask.where(id: params[:id]).first
     @settings = Backlogs.settings
     begin
       result = @impediment.update_with_relationships(params)

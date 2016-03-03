@@ -51,7 +51,7 @@ a:hover{
   position:relative;
 }
 #toolbar .links{
-  bottom:5px;
+//  bottom:5px;
   display:block;
   right:10px;
   position:absolute;
@@ -59,6 +59,9 @@ a:hover{
 #toolbar .links a{
   cursor:pointer;
   padding-left:5px;
+}
+#toolbar .tb_mnu_btn .ui-multiselect{
+  margin-top:2px;
 }
 body.loading #refresh{
   background-image:url('images/bouncer.gif');

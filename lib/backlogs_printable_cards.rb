@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'prawn'
 require 'prawn/measurement_extensions'
+require 'pdf/core/page_geometry'
 require 'net/http'
 
 require 'yaml'
@@ -76,7 +77,7 @@ module BacklogsPrintableCards
         @name = layout['name']
         @source = layout['source']
 
-        geom = Prawn::Document::PageGeometry::SIZES[@papersize]
+        geom = PDF::Core::PageGeometry::SIZES[@papersize]
         if geom.nil?
           Rails.logger.error "Backlogs printable cards: paper size '#{@papersize}' for label #{@name} not supported"
           @valid = false
@@ -133,7 +134,7 @@ module BacklogsPrintableCards
        'maco-us-templates.xml', 'misc-iso-templates.xml', 'misc-other-templates.xml', 'misc-us-templates.xml', 'pearl-iso-templates.xml',
        'uline-us-templates.xml', 'worldlabel-us-templates.xml', 'zweckform-iso-templates.xml'].each {|filename|
 
-        uri = URI.parse("http://git.gnome.org/browse/glabels/plain/templates/#{filename}")
+        uri = URI.parse("https://git.gnome.org/browse/glabels/plain/templates/#{filename}")
         labels = nil
 
         if ! ENV['http_proxy'].blank?
@@ -144,7 +145,7 @@ module BacklogsPrintableCards
             else
               user = pass = nil
             end
-            labels = Net::HTTP::Proxy(proxy.host, proxy.port, user, pass).start(uri.host) {|http| http.get(uri.path)}.body
+            labels = Net::HTTP::Proxy(proxy.host, proxy.port, user, pass).start(uri.host, uri.port, use_ssl: uri.scheme == 'https') {|http| http.get(uri.path)}.body
           rescue URI::Error => e
             puts "Setup proxy failed: #{e}"
             labels = nil

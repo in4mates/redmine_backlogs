@@ -219,3 +219,20 @@ pt-BR:
       * O valor atual se tornará o valor atual para todas 
          propriedades de história/tarefas
       * Estado será configurado para o estado padrão da issue
+  field_fixed_version: Sprint
+  field_version: Sprint
+  label_version: Sprint
+  label_version_new: Novo sprint
+  label_version_plural: Sprints
+  label_roadmap_no_issues: Sem tarefas para este sprint
+  label_current_version: Sprint atual
+  label_show_completed_versions: Exibir sprints completos
+  label_scm: 'Controle de sprint:'
+  button_rollback: Voltar para este sprint
+  notice_unable_delete_version: Não foi possível excluir o sprint
+  permission_manage_versions: Gerenciar sprints
+  error_can_not_reopen_issue_on_closed_version: Uma tarefa atribuída a um sprint fechado não pode ser reaberta
+  label_close_versions: Fechar sprints concluídos
+  text_scm_command_version: Sprint
+  label_completed_versions: Sprints concluídos
+  label_attribute_of_fixed_version: "sprint %{name}"

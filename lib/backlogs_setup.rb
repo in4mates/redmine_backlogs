@@ -123,7 +123,7 @@ module Backlogs
   module_function :gems
 
   def trackers
-    return {:task => !!Tracker.find_by_id(RbTask.tracker), :story => !RbStory.trackers.empty?, :default_priority => !IssuePriority.default.nil?}
+    return {:task => !!Tracker.where(id: RbTask.tracker).first, :story => !RbStory.trackers.empty?, :default_priority => !IssuePriority.default.nil?}
   end
   module_function :trackers
 

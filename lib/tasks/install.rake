@@ -27,7 +27,7 @@ namespace :redmine do
       puts "Installing to the #{ENV['RAILS_ENV']} environment."
 
       if ! ['no', 'false'].include?("#{ENV['labels']}".downcase)
-        print "Fetching card labels from http://git.gnome.org..."
+        print "Fetching card labels from https://git.gnome.org..."
         STDOUT.flush
         begin
           BacklogsPrintableCards::CardPageLayout.update
@@ -51,14 +51,14 @@ namespace :redmine do
       if ENV['story_trackers'] && ENV['story_trackers'] != ''
         trackers =  ENV['story_trackers'].split(',')
         trackers.each{|name|
-          if ! Tracker.find_by_name(name)
+          if ! Tracker.where(name: name).first
             puts "Creating story tracker '#{name}'"
-            default_status = IssueStatus.find_by(:name => 'New')
+            default_status = IssueStatus.where(name: 'New').first
             tracker = Tracker.new(:name => name, :default_status => default_status)
             tracker.save!
           end
         }
-        Backlogs.setting[:story_trackers] = trackers.collect{|n| Tracker.find_by_name(n).id }
+        Backlogs.setting[:story_trackers] = trackers.collect{|n| Tracker.where(name: n).first.id }
       else
         if RbStory.trackers.length == 0
           puts "Configuring story and task trackers..."
@@ -99,13 +99,13 @@ namespace :redmine do
       end
 
       if ENV['task_tracker'] && ENV['task_tracker'] != ''
-        if ! Tracker.find_by_name(ENV['task_tracker'])
+        if ! Tracker.where(name: ENV['task_tracker']).first
           puts "Creating task tracker '#{ENV['task_tracker']}'"
-          default_status = IssueStatus.find_by(:name => 'New')
+          default_status = IssueStatus.where(name: 'New').first
           tracker = Tracker.new(:name => ENV['task_tracker'], :default_status => default_status)
           tracker.save!
         end
-        Backlogs.setting[:task_tracker] = Tracker.find_by_name(ENV['task_tracker']).id
+        Backlogs.setting[:task_tracker] = Tracker.where(name: ENV['task_tracker']).first.id
       else
         if !RbTask.tracker
           # Check if there is at least one tracker available
@@ -181,7 +181,7 @@ namespace :redmine do
         print "Please type the tracker's name: "
         STDOUT.flush
         name = STDIN.gets.chomp!
-        if Tracker.find_by_name(name)
+        if Tracker.where(name: name).first
           puts "Ooops! That name is already taken."
           next
         end
@@ -189,7 +189,7 @@ namespace :redmine do
         STDOUT.flush
 
         if (STDIN.gets.chomp!).match("y")
-          default_status = IssueStatus.find_by(:name => 'New')
+          default_status = IssueStatus.where(name: 'New').first
           tracker = Tracker.new(:name => name, :default_status => default_status)
           tracker.save!
           repeat = false

@@ -77,7 +77,7 @@ class RbTask < Issue
     if is_impediment and blocks and blocks.strip != ''
       begin
         first_blocked_id = blocks.split(/\D+/)[0].to_i
-        attribs['project_id'] = Issue.find_by_id(first_blocked_id).project_id if first_blocked_id
+        attribs['project_id'] = Issue.where(id: first_blocked_id).first.project_id if first_blocked_id
       rescue
       end
     end
