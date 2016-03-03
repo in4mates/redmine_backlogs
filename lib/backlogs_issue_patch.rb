@@ -181,11 +181,19 @@ module Backlogs
                                               self.fixed_version_id, self.fixed_version_id,
                                               RbTask.tracker).all.to_a
           tasklist.each{|task| task.history.save! }
-          if tasklist.size > 0
-            task_ids = '(' + tasklist.collect{|task| self.class.connection.quote(task.id)}.join(',') + ')'
+          tasklist_status_keep=tasklist.select{|task| task.tracker_id.to_s == "#{RbTask.tracker}"}
+          if tasklist_status_keep.size > 0
+            task_ids = '(' + tasklist_status_keep.collect{|task| self.class.connection.quote(task.id)}.join(',') + ')'
             self.class.connection.execute("update issues set
-                                updated_on = #{self.class.connection.quote(self.updated_on)}, fixed_version_id = #{self.class.connection.quote(self.fixed_version_id)}, tracker_id = #{RbTask.tracker}
-                                where id in #{task_ids}")
+              updated_on = #{self.class.connection.quote(self.updated_on)}, fixed_version_id = #{self.class.connection.quote(self.fixed_version_id)}, tracker_id = #{RbTask.tracker}
+              where id in #{task_ids}")
+          end
+          tasklist_status_reset=tasklist.select{|task| task.tracker_id.to_s != "#{RbTask.tracker}"}
+          if tasklist_status_reset.size > 0
+            task_ids = '(' + tasklist_status_reset.collect{|task| self.class.connection.quote(task.id)}.join(',') + ')'
+            self.class.connection.execute("update issues set
+              updated_on = #{self.class.connection.quote(self.updated_on)}, fixed_version_id = #{self.class.connection.quote(self.fixed_version_id)}, tracker_id = #{RbTask.tracker}, status_id = 1
+              where id in #{task_ids}")
           end
         end
       end
