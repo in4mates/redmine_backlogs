@@ -25,6 +25,8 @@ module Backlogs
         after_save  :backlogs_after_save
 
         include Backlogs::ActiveRecord::Attributes
+
+        safe_attributes 'remaining_hours'
       end
     end
 
