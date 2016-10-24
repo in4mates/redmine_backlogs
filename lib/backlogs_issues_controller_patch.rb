@@ -26,7 +26,9 @@ module Backlogs
           when 'xml'
             body = Nokogiri::XML(response.body)
             body.xpath('//issue').each{|issue|
-              issue << body.create_element('remaining_hours', (@issues || [@issue]).select {|i| i.id.to_i == issue.at('.//id').text.to_i }.first.remaining_hours.to_s)
+              full_issue = (@issues || [@issue]).select {|i| i.id.to_i == issue.at('.//id').text.to_i }.first
+              issue << body.create_element('story_name', full_issue.story_name.to_s)
+              issue << body.create_element('remaining_hours', full_issue.remaining_hours.to_s)
               next unless story_trackers.include?(Integer(issue.at('.//tracker')['id']))
               issue << body.create_element('story_points', RbStory.find(issue.at('.//id').text).story_points.to_s)
               next unless RbStory.find(issue.at('.//id').text).release
@@ -38,7 +40,9 @@ module Backlogs
             jsonp = (request.params[:callback] || request.params[:jsonp]).to_s.gsub(/[^a-zA-Z0-9_]/, '')
             body = JSON.parse(jsonp.present? ? response.body.sub("#{jsonp}(","").chop : response.body)
             (body['issues'] || [body['issue']]).each{|issue|
-              issue['remaining_hours'] = (@issues || [@issue]).select {|i| i.id.to_i == issue['id'].to_i }.first.remaining_hours
+              full_issue = (@issues || [@issue]).select {|i| i.id.to_i == issue['id'].to_i }.first
+              issue['story_name'] = full_issue.story_name.to_s
+              issue['remaining_hours'] = full_issue.remaining_hours
               next unless story_trackers.include?(issue['tracker']['id'])
               issue['story_points'] = RbStory.find(issue['id']).story_points
               next unless RbStory.find(issue['id']).release

@@ -26,7 +26,7 @@ module Backlogs
 
         include Backlogs::ActiveRecord::Attributes
 
-        safe_attributes 'remaining_hours'
+        safe_attributes 'remaining_hours', 'story_name'
       end
     end
 
@@ -79,6 +79,10 @@ module Backlogs
           end
         end
         return @rb_story
+      end
+
+      def story_name
+        self.story.try(:subject)
       end
 
       def blocks(include_closed = false)
